@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.os.Message
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var message: ArrayList<String>
     lateinit var etMessage: EditText
     lateinit var btSubmit : Button
+    lateinit var tvMessage: TextView
 
     var notes = ""
 
@@ -26,23 +27,29 @@ class MainActivity : AppCompatActivity() {
         rvMain = findViewById(R.id.rvMain)
         etMessage = findViewById(R.id.etMessage)
         btSubmit = findViewById(R.id.btSubmit)
+        //tvMessage = findViewById(R.id.tvMessage)
 
 
         message = arrayListOf()
+        val adapter = RVAdapter(message)
+        rvMain.adapter = adapter
+        rvMain.layoutManager = LinearLayoutManager(this)
+
 
         btSubmit.setOnClickListener {
             notes = etMessage.text.toString()
             message.add(notes)
-            rvMain.adapter = RVAdapter(message)
+            adapter.update(message)
             rvMain.adapter!!.notifyDataSetChanged()
 
+
             var dbHelper = DBHelper(applicationContext)
+            //Saving data
             dbHelper.savedata(notes)
             Toast.makeText(applicationContext,"data saved successfully", Toast.LENGTH_SHORT).show()
+
         }
 
-
-
-
     }
+
 }

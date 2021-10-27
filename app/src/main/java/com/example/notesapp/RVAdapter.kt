@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_row.view.*
 
 
-class RVAdapter (private val data: ArrayList<String>): RecyclerView.Adapter<RVAdapter.ItemViewHolder>() {
+class RVAdapter (var data: ArrayList<String>): RecyclerView.Adapter<RVAdapter.ItemViewHolder>() {
     class ItemViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
 
     }
@@ -29,6 +29,10 @@ class RVAdapter (private val data: ArrayList<String>): RecyclerView.Adapter<RVAd
             tvMessage.text= note
 
         }
+    }
+
+    fun update(dataList : ArrayList<String>){
+        data = dataList
     }
 
     override fun getItemCount(): Int {
